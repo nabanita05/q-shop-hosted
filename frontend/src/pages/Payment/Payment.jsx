@@ -42,6 +42,29 @@ const Payment = () => {
     };
     setProgress(100)
     const razor = new window.Razorpay(options)
+    razor.on("payment.failed", function (response) {
+      console.error(response.error.code);
+      console.error(response.error.description);
+      console.error(response.error.source);
+      console.error(response.error.step);
+      console.error(response.error.reason);
+      console.error(response.error.metadata.order_id);
+      console.error(response.error.metadata.payment_id);
+    });
+
+    razor.on("payment.success", function (response) {
+      // Handle success, you might want to navigate to a success page
+      console.log(response);
+
+      // Check if there is a redirect URL in the response
+      if (response.redirectUrl) {
+        window.location.href = response.redirectUrl;
+      } else {
+        // Fallback logic if no redirect URL is provided
+        // You can navigate to a success page or perform other actions
+        console.log("Payment successful");
+      }
+    });
     razor.open()
 
 

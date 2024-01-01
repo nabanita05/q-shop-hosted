@@ -99,9 +99,11 @@ export const paymentVerification = async (req, res) => {
       razorpay_signature,
     });
     //need to change
-    res.redirect(
-      301,`https://q-shop-hosted-frontend.vercel.app/paymentsuccess?reference=${razorpay_payment_id}`
-    );
+    const redirectUrl = `https://q-shop-hosted-frontend.vercel.app/paymentsuccess?reference=${razorpay_payment_id}`;
+    res.status(200).json({
+      success: true,
+      redirectUrl,
+    });
   } else {
     res.status(400).json({
       success: false,
