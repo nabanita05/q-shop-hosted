@@ -10,11 +10,13 @@ import { setAmount } from "../../redux/amountSlice.js";
 import { useNavigate } from "react-router-dom";
 import authService from "../../appwrite/auth.js";
 import axios from "axios";
+import LoadingBar from "react-top-loading-bar";
 
 
 const Cart = () => {
 
   const [userName, setUserName] = useState("Unknown!");
+  const [progress, setProgress] = useState(0)
 
 // get user name:
 const fetchData = async () => {
@@ -63,6 +65,7 @@ useEffect(() => {
   const paymentHandler = async ()=>{
     if(userName !== "Unknown!"){
       try {
+        setProgress(progress+33)
         await axios.post("https://q-shop-hosted.vercel.app/api/saveOrder",{
           name : userName,
           price : totalAmt,
@@ -72,12 +75,20 @@ useEffect(() => {
         console.error("Error saving order details: ", error);
       }
     }
+    setProgress(progress+33)
     dispatch(setAmount(totalAmt + shippingCharge))
+    setProgress(100)
     navigate("/paymentgateway")
   }
 
 
   return (
+    <>
+    <LoadingBar
+        color='#f11946'
+        progress={progress}
+        onLoaderFinished={() => setProgress(0)}
+      />
     <div className="max-w-container mx-auto px-7">
       <Breadcrumbs title="Cart 🛒" />
       {(products.length > 0 && isAuthenticated) ? (
@@ -195,6 +206,7 @@ useEffect(() => {
         </motion.div>
       )}
     </div>
+    </>
   );
 };
 
