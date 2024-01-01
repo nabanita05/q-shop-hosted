@@ -9,7 +9,7 @@ export const app = express();
 app.use(cors(
   //need to change the uri
   {
-    origin: ["http://localhost:5173"],
+    origin: ["https://q-shop-hosted-frontend.vercel.app"],
     methos: ["POST", "GET"],
     credentials: true,
   }
