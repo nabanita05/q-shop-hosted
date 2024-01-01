@@ -56,7 +56,7 @@ const PaymentSuccess = () => {
     }else{
         setProgress(progress + 33);
     axios
-      .post('http://localhost:5000/create-pdf', {
+      .post('https://q-shop-hosted-receipt-server.vercel.app/create-pdf', {
         name: userName,
         razorpay_order_id: paymentDetails.razorpay_order_id,
         razorpay_signature: paymentDetails.razorpay_signature,
@@ -64,7 +64,7 @@ const PaymentSuccess = () => {
         price: orderDetails.price,
         shippingFee: orderDetails.shippingFee,
       })
-      .then(() => axios.get('http://localhost:5000/fetch-pdf', { responseType: 'blob' }))
+      .then(() => axios.get('https://q-shop-hosted-receipt-server.vercel.app/fetch-pdf', { responseType: 'blob' }))
       .then((res) => {
         const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
         setProgress(100);
