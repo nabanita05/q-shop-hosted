@@ -8,6 +8,10 @@
     ],
     "routes": [
       {
+        "src": "/paymentsuccess",
+        "headers": { "Location": "https://q-shop-hosted-frontend.vercel.app" }
+      },
+      {
         "src": "/(.*)",
         "dest": "server.js"
       }
